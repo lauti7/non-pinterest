@@ -1,0 +1,79 @@
+import React, {Component} from 'react'
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import auth from '../auth'
+
+const classes = theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
+  button: {
+    margin: theme.spacing(1),
+  },
+  input: {
+    display: 'none',
+  },
+});
+
+class Login extends Component {
+   state = {
+     email: '',
+     password: ''
+  }
+
+  componentDidMount(){
+    if (auth.isAuthenticated()) {
+      this.props.history.push('/profile')
+    }
+  }
+
+  handleChange = name => event => {
+    this.setState({[name]: event.target.value})
+  }
+
+
+  render(){
+    return(
+      <React.Fragment>
+        <h1>Login</h1>
+        <TextField
+          id="email"
+          label="Email"
+          value={this.state.email}
+          onChange={this.handleChange('email')}
+          className={classes.textField}
+          margin="normal"
+        />
+        <br/>
+        <TextField
+          id="password"
+          label="Password"
+          value={this.state.password}
+          onChange={this.handleChange('password')}
+          className={classes.textField}
+          margin="normal"
+        />
+        <br/>
+        <Button
+        variant="contained"
+        color="primary"
+        className={classes.button}
+        onClick={ () => { auth.login(this.state.email, this.state.password, () => {
+          console.log(auth)
+          this.props.history.push('/profile')
+        }) } }>
+          Login
+        </Button>
+    </React.Fragment>
+    )
+  }
+
+}
+
+export default Login
