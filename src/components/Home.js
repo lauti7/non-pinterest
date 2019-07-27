@@ -2,9 +2,7 @@ import React, {Component} from 'react'
 import auth from '../auth'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import GridList from '@material-ui/core/GridList';
-import ImagesLayout from './ImagesLayout'
-
+import ImagesContainer from './ImagesContainer'
 
 class Home extends Component {
 
@@ -26,7 +24,16 @@ class Home extends Component {
   images = () => {
     fetch(`https://api.unsplash.com/photos/?client_id=26f624f991e1054bc081c2418f43e12040b36c2db0174ad1c49efd83d98a9a22&page=${this.state.nxtPage}&per_page=20`)
       .then(res => res.json())
-      .then(images => this.setState({images: [...this.state.images, ...images]}, () => console.log(...images)))
+      .then(images => images.map(img => {
+        return {
+          id: img.id,
+          url: img.urls.small,
+          alt_description: img.alt_description,
+          urlFull: img.urls.full,
+          user: img.user.name
+        }
+      }))
+      .then(newImages => this.setState({images: [...this.state.images, ...newImages]}, () => console.log(...newImages)) )
   }
 
   nxtPage = () => {
@@ -40,7 +47,8 @@ class Home extends Component {
     event.target.classList.add('liked');
     if (auth.isAuthenticated()) {
       const requestData = {
-        url: img,
+        url: img.url,
+        urlFull:img.urlFull,
         userId: auth.user.uid
       }
       fetch('http://localhost:8080/api/likes', {
@@ -89,27 +97,10 @@ class Home extends Component {
     <>
       <h1>Home</h1>
       <h2>Imagenes populares</h2>
-      <div>
-      {
-        (this.state.images.length !== 0) ?
-          (
-            <GridList>
-              {this.state.images.map(img => (
-                <ImagesLayout
-                  full={img.urls.full}
-                  key={img.id}
-                  source={img.urls.small}
-                  alt_description={img.alt_description}
-                  user={img.user.name}
-                  likeImage={this.likeImage}
-                />
-              ))}
-            </GridList>
-          )
-        : 'loading'
-      }
-      </div>
-
+      <ImagesContainer
+        images={this.state.images}
+        likeImage={this.likeImage}
+      />
       <div style={{height: 25}}></div>
     </>
     )

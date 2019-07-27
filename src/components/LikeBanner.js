@@ -1,8 +1,9 @@
 import React from 'react'
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import Icon from '@material-ui/core/Icon';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
+import {Favorite} from '@material-ui/icons'
+
 
 const styles = theme => ({
   icon: {
@@ -15,6 +16,9 @@ const styles = theme => ({
       color: 'rgb(255, 0, 0)',
     },
   },
+  liked: {
+    color:'rgb(255, 0, 0)'
+  }
 });
 
 const LikeBanner = (props) => {
@@ -23,9 +27,9 @@ const LikeBanner = (props) => {
     <>
     <GridListTileBar
       title={props.alt_description}
-      subtitle={<span>by: {props.user}</span>}
+      subtitle={<span>{props.user}</span>}
       actionIcon={
-        <Icon className={classNames(classes.iconHover, "fas fa-heart")} style={{ marginRight: 10 }} onClick={(event) => props.likeImage(event, props.source)} />
+        <Favorite className={(props.pathname === '/profile') ? classNames(classes.iconHover, classes.liked) : classNames(classes.iconHover, classes.icon)} onClick={(event) => props.likeImage(event, props.img)} />
       }
     />
     </>

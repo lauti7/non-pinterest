@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 import auth from '../auth';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import Icon from '@material-ui/core/Icon';
-import Test from './Test'
+import ImagesContainer from './ImagesContainer'
 
 class Profile extends Component {
 
@@ -28,6 +24,7 @@ class Profile extends Component {
     console.log('unlike');
     const requestData = {
       url: img.url,
+      urlFull: img.urlFull,
       userId: img.userId
     }
     fetch('http://localhost:8080/api/likes', {
@@ -53,38 +50,15 @@ class Profile extends Component {
 
 
   render() {
-    // <Test
-    //   source={img.url}
-    //   id={img.id}
-    //   unlikeImage={this.unlikeImage}
-    //  />
-    //  <img src={img.url} alt="" />
-    // <GridListTileBar
-    //   title={img.id}
-    //   actionIcon={
-    //     <Icon className="fas fa-heart" color="error" style={{ marginRight: 10 }} onClick={(event) => this.unlikeImage(event,  img.url)} />}
-    //  />
     return (
       <>
         <h1> Mi Perfil </h1>
         <h2>Mis fotos</h2>
-        {
-          (this.state.userImages !== null) ?
-          (
-            <GridList cellHeight={260}  cols={5}>
-              {this.state.userImages.map(img => (
-                <GridListTile key={img.id} cols={this.random()}>
-                  <Test
-                    source={img.url}
-                    id={img.id}
-                    unlikeImage={this.unlikeImage}
-                   />
-                </GridListTile>
-              ))}
-            </GridList>
-          )
-          : 'loadiing...'
-        }
+        <ImagesContainer
+          images={this.state.userImages}
+          history={this.props.history}
+          likeImage={this.unlikeImage}
+         />
       </>
 
     );
