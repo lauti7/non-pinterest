@@ -29,7 +29,7 @@ class Home extends Component {
           id: img.id,
           url: img.urls.small,
           alt_description: img.alt_description,
-          urlFull: img.urls.full,
+          urlFull: img.urls.regular,
           user: img.user.name
         }
       }))
@@ -64,7 +64,7 @@ class Home extends Component {
         if (like === false) {
           toast.error('Ya le diste Like a esta imagen');
         } else {
-          toast('Like', {
+          toast('Liked', {
             position: toast.POSITION.TOP_CENTER
           })
         }
@@ -95,10 +95,10 @@ class Home extends Component {
   render() {
     return(
     <>
-      <h1>Home</h1>
-      <h2>Imagenes populares</h2>
+      <h1>Imagenes populares</h1>
       <ImagesContainer
         images={this.state.images}
+        history={this.props.history}
         likeImage={this.likeImage}
       />
       <div style={{height: 25}}></div>

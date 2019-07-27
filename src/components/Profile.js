@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import auth from '../auth';
+import { toast } from 'react-toastify';
 import ImagesContainer from './ImagesContainer'
 
 class Profile extends Component {
@@ -34,7 +35,13 @@ class Profile extends Component {
         'Content-Type': 'application/json'
       }
     })
-    .then(() => this.userImages())
+    .then(() => {
+      toast('Unliked', {
+        position: toast.POSITION.TOP_CENTER
+      })
+      this.userImages()
+    })
+
   }
 
   random = () => {
@@ -53,7 +60,7 @@ class Profile extends Component {
     return (
       <>
         <h1> Mi Perfil </h1>
-        <h2>Mis fotos</h2>
+        <h2>Mis likes</h2>
         <ImagesContainer
           images={this.state.userImages}
           history={this.props.history}
