@@ -12,14 +12,11 @@ const ImagesContainer = ({images, likeImage, history}) => {
           <GridList cellHeight={260} cols={4}>
             {images.map(img => (
               <GridListTile key={img.id} cols={1}>
-                <a target="_blank"  rel="noopener noreferrer" href={img.urlFull} title="Ver imagen completa">
-                  <img
-                    style={{width:'100%', height:'100%'}}
-                    src={img.url}
-                    alt={(history.location.pathname === '/profile') ? 'Una imagen likeada' : img.alt_description}/>
-                </a>
+                <img
+                  src={img.url}
+                  alt={(history.location.pathname === '/profile') ? 'Una imagen likeada' : img.alt_description}/>
                 <LikeBanner
-                  alt_description={(history.location.pathname === '/profile') ? 'Una imagen likeada' : img.alt_description}
+                  alt_description={(history.location.pathname === '/profile') ? '' : img.alt_description}
                   user={(history.location.pathname === '/profile') ? '' : `by ${img.user}`}
                   img={img}
                   pathname={history.location.pathname}
@@ -29,7 +26,7 @@ const ImagesContainer = ({images, likeImage, history}) => {
             ))}
           </GridList>
         )
-      : 'Loading...'
+      : ((history.location.pathname === '/search') ? '' : 'Loading')
     }
     </div>
   )
