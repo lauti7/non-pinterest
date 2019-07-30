@@ -3,7 +3,8 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import LikeBanner from './LikeBanner';
 
-const ImagesContainer = ({images, likeImage, history}) => {
+const ImagesContainer = ({images, likeImage, history, likedImages}) => {
+  const likedImgs = (history.location.pathname === '/profile') ? null : likedImages()
   return (
     <div>
     {
@@ -21,6 +22,7 @@ const ImagesContainer = ({images, likeImage, history}) => {
                   img={img}
                   pathname={history.location.pathname}
                   likeImage={likeImage}
+                  liked={(likedImgs !== null) ? likedImgs.find(r => r === img.url) : null}
                  />
               </GridListTile>
             ))}

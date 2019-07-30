@@ -36,12 +36,12 @@ const LikeBanner = (props) => {
   return (
     <>
     <GridListTileBar
-      title={<p style={{ maxWidth: '20px', margin: 0}} title={props.alt_description} >{props.alt_description}</p>}
-      subtitle={<span>{props.user}</span>}
+      title={<p style={{ maxWidth: '10px', margin: 0}} title={props.alt_description} >{props.alt_description}</p>}
+      subtitle={<span >{props.user}</span>}
       actionIcon={
         <>
-          <IconButton onClick={(event) => props.likeImage(event, props.img)}>
-            <Favorite className={(props.pathname === '/profile') ?  classes.liked : classes.iconHover}  />
+          <IconButton style={{padding: '0px'}} onClick={(event) => props.likeImage(event, props.img)}>
+            <Favorite className={(props.liked || props.pathname === '/profile') ?  classes.liked : classes.iconHover}  />
           </IconButton>
           <ModalImage img={props.img.urlFull} />
         </>

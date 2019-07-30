@@ -9,11 +9,14 @@ class Home extends Component {
   state = {
     images: [],
     nxtPage: 1,
+    userImages: [],
+    likedImages: null
   }
 
 
   componentDidMount(){
-    this.images();
+    this.userImages()
+    this.images()
     toast.configure({
       autoClose: 2000,
       draggable: true,
@@ -33,7 +36,15 @@ class Home extends Component {
           user: img.user.name
         }
       }))
-      .then(newImages => this.setState({images: [...this.state.images, ...newImages]}, () => console.log(...newImages)) )
+      .then(newImages => this.setState({images: [...this.state.images, ...newImages]}))
+  }
+
+  userImages = () => {
+    fetch(`http://localhost:8080/api/likes/${auth.user.uid}`)
+      .then(res => res.json())
+      .then(userImages => {
+        this.setState({userImages:[...userImages.response]})
+      })
   }
 
   nxtPage = () => {
@@ -67,6 +78,8 @@ class Home extends Component {
           toast('Liked', {
             position: toast.POSITION.TOP_CENTER
           })
+          this.userImages()
+          this.findLikedImages()
         }
 
       })
@@ -92,6 +105,19 @@ class Home extends Component {
     }
   }
 
+  findLikedImages = () => {
+    if(this.state.userImages.length > 0 && this.state.images.length > 0){
+      const likedImages = [...this.state.userImages]
+      const images = [...this.state.images]
+      const urlsLikedImages = likedImages.map(img => img.url)
+      const urlsImages = images.map(img => img.url)
+      const filter = urlsImages.filter(img => urlsLikedImages.includes(img))
+      return filter
+    } else {
+      return false
+    }
+  }
+
   render() {
     return(
     <>
@@ -100,6 +126,7 @@ class Home extends Component {
         images={this.state.images}
         history={this.props.history}
         likeImage={this.likeImage}
+        likedImages={this.findLikedImages}
       />
       <div style={{height: 25}}></div>
     </>
