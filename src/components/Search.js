@@ -16,13 +16,12 @@ class Search extends Component {
     window.addEventListener('scroll', this.handleScroll)
   }
 
-
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.value, nxtPage: 1, images: [] }, () => this.searchedImages());
+  handleChange = event => {
+    this.setState({ inputSearch: event.target.value, nxtPage: 1, images: [] }, () => this.searchedImages());
   };
 
   searchedImages = () => {
-    fetch(`https://api.unsplash.com/search/photos?client_id=26f624f991e1054bc081c2418f43e12040b36c2db0174ad1c49efd83d98a9a22&$&page=${this.state.nxtSearchedPage}&query=${this.state.inputSearch}&per_page=20`)
+    fetch(`https://api.unsplash.com/search/photos?client_id=26f624f991e1054bc081c2418f43e12040b36c2db0174ad1c49efd83d98a9a22&$&page=${this.state.nxtPage}&query=${this.state.inputSearch}&per_page=20`)
       .then(res => res.json())
       .then(images => images.results.map(img => {
         return {
@@ -34,10 +33,8 @@ class Search extends Component {
         }
       }))
       .then(newImages => {
-        console.log('state', ...this.state.images)
         this.setState({images: [ ...this.state.images, ...newImages]})
       })
-      console.log(this.state.inputSearch)
   }
 
   nxtPage = () => {
@@ -94,8 +91,8 @@ class Search extends Component {
     return (
       <>
       <InputSearch
-        handleChange={this.handleChange('inputSearch')}
-        inputSearc={this.state.inputSearch}
+        handleChange={this.handleChange}
+        inputSearch={this.state.inputSearch}
       />
       <div>
         <ImagesContainer
@@ -103,7 +100,7 @@ class Search extends Component {
           history={this.props.history}
           likeImage={this.likeImage}
         />
-        <div style={{ width:'100%', height: 50 }}></div>
+        <div style={{ width:'100%', height: '50px' }}></div>
       </div>
       </>
     )

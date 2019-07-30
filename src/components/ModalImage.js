@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import IconButton from '@material-ui/core/IconButton';
 import {CropOriginal} from '@material-ui/icons'
+import Loading from '../giphy.gif'
 
 
 const styles = theme => ({
@@ -33,7 +34,18 @@ const styles = theme => ({
 class ModalImage extends Component {
   state = {
     open: false,
+    loaded:true
   };
+
+  // componentDidMount() {
+  //   const img = new Image();
+  //   img.onload = () => {
+  //     this.setState({
+  //       loaded: true
+  //     });
+  //   };
+  //   img.src = this.props.img;
+  // }`
 
   handleOpen = () => {
     this.setState({ open: true });
@@ -48,7 +60,7 @@ class ModalImage extends Component {
 
     return (
       <>
-        <IconButton onClick={this.handleOpen} >
+        <IconButton  onClick={this.handleOpen} >
           <CropOriginal className={classes.imgIcon}  />
         </IconButton>
         <Modal
@@ -59,7 +71,12 @@ class ModalImage extends Component {
         >
           <div className={classes.paper}>
             <div className={classes.container}>
-              <img className={classes.img} src={this.props.img} alt=""/>
+              {
+                (!this.state.loaded) ?
+                  <img  className={classes.img} src={Loading} alt=""/>
+                : <img  className={classes.img} src={this.props.img} alt=""/>
+
+              }
             </div>
           </div>
         </Modal>
