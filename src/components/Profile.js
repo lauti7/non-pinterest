@@ -10,7 +10,7 @@ class Profile extends Component {
   }
 
   userImages = () => {
-    fetch(`http://non-pinterest.herokuapp.com/api/likes/${auth.user.uid}`)
+    fetch(`https://non-pinterest.herokuapp.com/api/likes/${auth.user.uid}`)
       .then(res => res.json())
       .then(userImages => {
         this.setState({userImages:[...userImages.response]}, () => console.log(this.state.userImages))
@@ -28,7 +28,7 @@ class Profile extends Component {
       urlFull: img.urlFull,
       userId: img.userId
     }
-    fetch('http://non-pinterest.herokuapp.com/api/likes', {
+    fetch('https://non-pinterest.herokuapp.com/api/likes', {
       method: 'DELETE',
       body: JSON.stringify(requestData),
       headers:{

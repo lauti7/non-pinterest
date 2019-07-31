@@ -54,7 +54,7 @@ class Search extends Component {
         urlFull:img.urlFull,
         userId: auth.user.uid
       }
-      fetch('http://non-pinterest.herokuapp.com/api/likes', {
+      fetch('https://non-pinterest.herokuapp.com/api/likes', {
         method: 'POST',
         body: JSON.stringify(requestData),
         headers:{
@@ -83,7 +83,7 @@ class Search extends Component {
 
   userImages = () => {
     if (auth.isAuthenticated()) {
-      fetch(`http://non-pinterest.herokuapp.com/api/likes/${auth.user.uid}`)
+      fetch(`https://non-pinterest.herokuapp.com/api/likes/${auth.user.uid}`)
         .then(res => res.json())
         .then(userImages => {
           this.setState({userImages:[...userImages.response]})
