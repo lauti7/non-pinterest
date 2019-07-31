@@ -40,11 +40,15 @@ class Home extends Component {
   }
 
   userImages = () => {
-    fetch(`http://non-pinterest.herokuapp.com/api/likes/${auth.user.uid}`)
-      .then(res => res.json())
-      .then(userImages => {
-        this.setState({userImages:[...userImages.response]})
-      })
+    if (auth.isAuthenticated()) {
+      fetch(`http://non-pinterest.herokuapp.com/api/likes/${auth.user.uid}`)
+        .then(res => res.json())
+        .then(userImages => {
+          this.setState({userImages:[...userImages.response]})
+        })
+    } else {
+      return null
+    }
   }
 
   nxtPage = () => {
