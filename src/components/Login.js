@@ -40,7 +40,7 @@ class Login extends Component {
 
   render(){
     return(
-      <React.Fragment>
+      <>
         <h1>Login</h1>
         <TextField
           id="email"
@@ -54,6 +54,7 @@ class Login extends Component {
         <TextField
           id="password"
           label="Password"
+          type="password"
           value={this.state.password}
           onChange={this.handleChange('password')}
           className={classes.textField}
@@ -70,7 +71,7 @@ class Login extends Component {
         }) } }>
           Login
         </Button>
-    </React.Fragment>
+    </>
     )
   }
 
