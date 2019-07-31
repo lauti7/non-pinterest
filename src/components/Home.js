@@ -40,7 +40,7 @@ class Home extends Component {
   }
 
   userImages = () => {
-    fetch(`http://localhost:8080/api/likes/${auth.user.uid}`)
+    fetch(`http://non-pinterest.herokuapp.com/api/likes/${auth.user.uid}`)
       .then(res => res.json())
       .then(userImages => {
         this.setState({userImages:[...userImages.response]})
@@ -53,7 +53,6 @@ class Home extends Component {
 
   likeImage = (event, img) => {
     console.log('like');
-    event.target.classList.remove('Home-iconHover-111');
     event.target.classList.add('iconLike');
     event.target.classList.add('liked');
     if (auth.isAuthenticated()) {
@@ -62,7 +61,7 @@ class Home extends Component {
         urlFull:img.urlFull,
         userId: auth.user.uid
       }
-      fetch('http://localhost:8080/api/likes', {
+      fetch('http://non-pinterest.herokuapp.com/api/likes', {
         method: 'POST',
         body: JSON.stringify(requestData),
         headers:{
@@ -106,7 +105,7 @@ class Home extends Component {
   }
 
   findLikedImages = () => {
-    if(this.state.userImages.length > 0 && this.state.images.length > 0){
+    if(this.state.images.length > 0){
       const likedImages = [...this.state.userImages]
       const images = [...this.state.images]
       const urlsLikedImages = likedImages.map(img => img.url)

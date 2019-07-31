@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
 import auth from '../auth';
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import InputSearch from './InputSearch'
 import ImagesContainer from './ImagesContainer'
 
@@ -10,9 +11,11 @@ class Search extends Component {
     images: [],
     nxtPage: 1,
     inputSearch: '',
+    userImages: []
   }
 
   componentDidMount() {
+    this.userImages()
     window.addEventListener('scroll', this.handleScroll)
   }
 
@@ -42,16 +45,16 @@ class Search extends Component {
   }
 
   likeImage = (event, img) => {
-    // event.target.classList.remove('Home-iconHover-111');
-    // event.target.classList.add('iconLike');
-    // event.target.classList.add('liked');
+    event.target.classList.remove('LikeBanner-iconHover-206');
+    event.target.classList.add('iconLike');
+    event.target.classList.add('liked');
     if (auth.isAuthenticated()) {
       const requestData = {
         url: img.url,
         urlFull:img.urlFull,
         userId: auth.user.uid
       }
-      fetch('http://localhost:8080/api/likes', {
+      fetch('http://non-pinterest.herokuapp.com/api/likes', {
         method: 'POST',
         body: JSON.stringify(requestData),
         headers:{
@@ -78,11 +81,32 @@ class Search extends Component {
     }
   }
 
+  userImages = () => {
+    fetch(`http://non-pinterest.herokuapp.com/api/likes/${auth.user.uid}`)
+      .then(res => res.json())
+      .then(userImages => {
+        this.setState({userImages:[...userImages.response]})
+      })
+  }
+
   handleScroll = () => {
     console.log('scroll');
     if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight)
     {
       this.nxtPage()
+    }
+  }
+
+  findLikedImages = () => {
+    if(this.state.images.length > 0){
+      const likedImages = [...this.state.userImages]
+      const images = [...this.state.images]
+      const urlsLikedImages = likedImages.map(img => img.url)
+      const urlsImages = images.map(img => img.url)
+      const filter = urlsImages.filter(img => urlsLikedImages.includes(img))
+      return filter
+    } else {
+      return false
     }
   }
 
@@ -99,6 +123,7 @@ class Search extends Component {
           images={this.state.images}
           history={this.props.history}
           likeImage={this.likeImage}
+          likedImages={this.findLikedImages}
         />
         <div style={{ width:'100%', height: '50px' }}></div>
       </div>

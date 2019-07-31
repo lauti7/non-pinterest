@@ -5,6 +5,7 @@ import LikeBanner from './LikeBanner';
 
 const ImagesContainer = ({images, likeImage, history, likedImages}) => {
   const likedImgs = (history.location.pathname === '/profile') ? null : likedImages()
+  console.log(likedImgs)
   return (
     <div>
     {
@@ -12,7 +13,7 @@ const ImagesContainer = ({images, likeImage, history, likedImages}) => {
         (
           <GridList cellHeight={260} cols={4}>
             {images.map(img => (
-              <GridListTile key={img.id} cols={1}>
+              <GridListTile  key={img.id} cols={1}>
                 <img
                   src={img.url}
                   alt={(history.location.pathname === '/profile') ? 'Una imagen likeada' : img.alt_description}/>

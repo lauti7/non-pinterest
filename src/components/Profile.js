@@ -10,7 +10,7 @@ class Profile extends Component {
   }
 
   userImages = () => {
-    fetch(`http://localhost:8080/api/likes/${auth.user.uid}`)
+    fetch(`http://non-pinterest.herokuapp.com/api/likes/${auth.user.uid}`)
       .then(res => res.json())
       .then(userImages => {
         this.setState({userImages:[...userImages.response]}, () => console.log(this.state.userImages))
@@ -28,7 +28,7 @@ class Profile extends Component {
       urlFull: img.urlFull,
       userId: img.userId
     }
-    fetch('http://localhost:8080/api/likes', {
+    fetch('http://non-pinterest.herokuapp.com/api/likes', {
       method: 'DELETE',
       body: JSON.stringify(requestData),
       headers:{
@@ -42,16 +42,6 @@ class Profile extends Component {
       this.userImages()
     })
 
-  }
-
-  random = () => {
-    let random = Math.floor(Math.random()*3);
-
-    if (random === 0) {
-      random = 1
-    }
-    console.log(random);
-    return random;
   }
 
 
