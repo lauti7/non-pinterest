@@ -1,4 +1,5 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# [Non-Pinterest](https://non-pinterest-app.herokuapp.com/)
+Project was built in React.
 
 ## Available Scripts
 
