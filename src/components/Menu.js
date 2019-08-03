@@ -13,13 +13,19 @@ const styles = theme => ({
   },
   title: {
     flexGrow: 1,
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1.2em',
+    },
+    [theme.breakpoints.up('md')]: {
+      fontSize: '2em',
+    },
   },
   color:{
     backgroundColor: '#ff5e68'
   },
   noneTxtDco:{
     textDecoration:'none',
-    color: '#f4f4f4'
+    color: '#f4f4f4',
   }
 });
 
@@ -30,8 +36,8 @@ const Menu = (props) => {
     <div className={classes.root}>
       <AppBar className={classes.color} position="static">
         <Toolbar>
-          <Typography variant="h4" className={classes.title}>
-            <Link className={classes.noneTxtDco} to='/'>non-pinterest</Link>
+          <Typography variant="h1" className={classes.title}>
+            <Link className={classes.noneTxtDco} to='/'>Non Pinterest</Link>
           </Typography>
           <NavBar />
         </Toolbar>
