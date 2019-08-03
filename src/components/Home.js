@@ -123,6 +123,8 @@ class Home extends Component {
       } else {
         return false
       }
+    } else {
+      return false
     }
   }
 
