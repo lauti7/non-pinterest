@@ -7,7 +7,6 @@ import withWidth from '@material-ui/core/withWidth';
 const ImagesContainer = ({images, likeImage, history, likedImages, width}) => {
   const likedImgs = (history.location.pathname === '/profile') ? null : likedImages();
 
-  console.log(width)
 
   const checkWidth = () => {
     if (width === 'xs') {
