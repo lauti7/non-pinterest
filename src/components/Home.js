@@ -13,7 +13,6 @@ class Home extends Component {
     likedImages: null
   }
 
-
   componentDidMount(){
     this.userImages()
     this.images()
@@ -22,6 +21,10 @@ class Home extends Component {
       draggable: true,
     })
     window.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount(){
+    window.removeEventListener('scroll', this.handleScroll);
   }
 
   images = () => {
@@ -109,15 +112,17 @@ class Home extends Component {
   }
 
   findLikedImages = () => {
-    if(this.state.images.length > 0){
-      const likedImages = [...this.state.userImages]
-      const images = [...this.state.images]
-      const urlsLikedImages = likedImages.map(img => img.url)
-      const urlsImages = images.map(img => img.url)
-      const filter = urlsImages.filter(img => urlsLikedImages.includes(img))
-      return filter
-    } else {
-      return false
+    if (auth.isAuthenticated()) {
+      if(this.state.images.length > 0){
+        const likedImages = [...this.state.userImages]
+        const images = [...this.state.images]
+        const urlsLikedImages = likedImages.map(img => img.url)
+        const urlsImages = images.map(img => img.url)
+        const filter = urlsImages.filter(img => urlsLikedImages.includes(img))
+        return filter
+      } else {
+        return false
+      }
     }
   }
 
