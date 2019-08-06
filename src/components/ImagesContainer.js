@@ -5,7 +5,8 @@ import LikeBanner from './LikeBanner';
 import withWidth from '@material-ui/core/withWidth';
 
 const ImagesContainer = ({images, likeImage, history, likedImages, width}) => {
-  const likedImgs = (history.location.pathname === '/profile') ? null : likedImages();
+  const likedImgs =  likedImages();
+
 
 
   const checkWidth = () => {
@@ -36,7 +37,7 @@ const ImagesContainer = ({images, likeImage, history, likedImages, width}) => {
                   img={img}
                   pathname={history.location.pathname}
                   likeImage={likeImage}
-                  liked={(likedImgs !== null) ? likedImgs.find(r => r === img.url) : null}
+                  liked={(!likedImgs) ? null : likedImgs.find(r => r === img.url) }
                  />
               </GridListTile>
             ))}
